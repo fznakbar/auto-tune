@@ -182,6 +182,7 @@ describe(`Music post interaction`, () => {
 				.set(`token`, token)
 				.send({
 					comment: `The Music sounds like a test`,
+					musicId: 1,
 				})
 				.expect(201)
 				.then((data) => {
@@ -196,7 +197,7 @@ describe(`Music post interaction`, () => {
 			request(app)
 				.get(`/comments/${musicPostId}`)
 				.set(`token`, token)
-				.expect(201)
+				.expect(200)
 				.then((data) => {
 					expect(data.body).not.toHaveLength(0);
 					done();
@@ -214,7 +215,9 @@ describe(`Music post interaction`, () => {
 				.expect(200)
 				.then((data) => {
 					expect(data.body).toHaveProperty(`comment`);
+					expect(data.body).toHaveProperty(`id`);
 					expect(data.body.comment).toBe(data.body.comment);
+					expect(data.body.id).toBe(data.body.id);
 					done();
 				})
 				.catch(done);
