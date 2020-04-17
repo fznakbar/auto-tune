@@ -26,6 +26,16 @@ describe(`Music`, () => {
 		done();
 	});
 
+	test(`Get Music, should return status 200 and data sort descending by like`, (done) => {
+		// get music, include Like rating count and sorted descending by like
+		done();
+	});
+
+	test(`Get Music with ID as params, should return status 200 and data`, (done) => {
+		// get music by ID, include like and dislike count
+		done();
+	});
+
 	test(`Delete Music, should return status 200 and data that is just deleted`, (done) => {
 		// Delete music
 		done();
@@ -43,17 +53,12 @@ describe(`Music post interaction`, () => {
 
 	describe(`Rating`, () => {
 		test(`User likes a music post, should return 201`, (done) => {
-			// user like 1 post
+			// user like 1 post by music ID
 			done();
 		});
 
 		test(`User dislike a music post, should return 201`, (done) => {
-			// user dislike 1 post
-			done();
-		});
-
-		test(`User rating has to only be 1, should return empty`, (done) => {
-			// Sequelize Model findAll user rating table
+			// user dislike 1 post by music ID
 			done();
 		});
 	});
@@ -62,6 +67,11 @@ describe(`Music post interaction`, () => {
 		var commentId;
 		test(`User comments on a post, should return 201 and data added`, (done) => {
 			// User add comment
+			done();
+		});
+
+		test(`Get comments on a post, should return 200 and data`, (done) => {
+			// get comments by music ID
 			done();
 		});
 
