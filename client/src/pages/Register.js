@@ -15,6 +15,7 @@ function Register(){
     e.preventDefault()
     if(password === confirmPassword){
       console.log(email, password)
+      history.push("/")
     } else {
       console.log('wrong password')
     }
@@ -22,29 +23,21 @@ function Register(){
 
   return(
     <div className="register" style={{height : "100vh"}}>
-    <h1 className="p-2" style={{color : "white", backgroundColor : "black", opacity : "50%"}}>Auto Tune</h1>
-    {/* <img className="img mt-0 p-0" alt="" src="../assets/logo.png" style={{"width : 15%;"></img> */}
-      <div className="m-5" style={{display: "flex", flexDirection: "row", justifyContent : "center", alignContent : "center", alignItems : "center", flexWrap : "nowrap"}}>
-        <div className="card" style={{opacity: "70%", backgroundColor: "black"}}>
-          <h1 style={{color : "white", textAlign : "center"}} className="mt-3">Register</h1>
-          <form onSubmit={register} className="ml-3 mr-3 mb-4 mt-2 p-3">
-            <div className="form-group">
-              <label style={{color : "white"}}>Email address :</label>
-              <input onChange={e => setEmail(e.target.value)} style={{color : "black"}} type="email" className="form-control" required></input>
-            </div>
-            <div className="form-group">
-              <label style={{color : "white"}}>Password :</label>
+    <h1 className="pb-0" style={{textAlign : "right", paddingTop : "70px", paddingRight : "70px"}}>Create your account</h1>
+    <h2 className="mt-0 pb-0" style={{textAlign : "right", paddingRight : "70px"}}>It's free</h2>
+      <div style={{position : 'absolute', textAlign : "left", right : "150px"}}>
+          <h1 style={{textAlign : "center"}} className="mt-5">Register</h1>
+            <form onSubmit={register}>
+              <label>Username :</label>
+              <input onChange={e => setEmail(e.target.value)} style={{color : "black"}} type="text" className="form-control" required></input>
+              <label>Password :</label>
               <input onChange={e => setPassword(e.target.value)} style={{color : "black"}} type="password" className="form-control" required></input>
-            </div>
-            <div className="form-group">
-              <label style={{color : "white"}}>Confirm Password :</label>
+              <label>Confirm Password :</label>
               <input onChange={e => setConfirmPassword(e.target.value)} style={{color : "black"}} type="password" className="form-control" required></input>
-            </div>
-            <button type="submit" className="btn btn-warning mb-1">Register</button><br></br>
-            <button onClick={loginPage} className="btn btn-clear" style={{color : "#0048d9"}}>Already register ? Login</button>
-          </form>
+              <button type="submit" className="btn btn-warning mb-1 mt-4">Register</button><br></br>
+              <button onClick={loginPage} className="btn btn-clear" style={{color : "#0048d9"}}>Already have an account ? Login</button>
+            </form>
         </div>
-      </div>
     </div>
   )
 }
