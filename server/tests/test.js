@@ -1,34 +1,105 @@
 const request = require(`supertest`);
-// const app = require(`../index`);
+const app = require(`../index`);
 const model = require(`../models`);
 
 var token;
 var musicPostId;
 
+function compareAllKey(data) {
+	for (var key in respond.body) {
+		expect(key).toBe(key);
+	}
+	console.log(data.body);
+}
+
 afterAll((done) => {
-	done();
+	model.User.destroy({ truncate: true, cascade: true, restartIdentity: true })
+		.then(() => {})
+		.catch(done);
+	model.Music.destroy({
+		truncate: true,
+		cascade: true,
+		restartIdentity: true,
+	})
+		.then((data) => {
+			done();
+		})
+		.catch(done);
+});
+
+test.only(`home`, (done) => {
+	request(app)
+		.get(`/er`)
+		.expect(200)
+		.then((data) => {
+			expect(data.body).toBe(`home`);
+			done();
+		})
+		.catch(done);
 });
 
 test(`Register user, should return status 201 and token`, (done) => {
-	// Register User
-	done();
+	request(app)
+		.post(`/users/register`)
+		.send({
+			username: `testMan`,
+			password: `testPassword`,
+		})
+		.expect(201)
+		.then((data) => {
+			expect(data.body).toHaveProperty(`token`);
+			expect(data.body.token).toBe(data.body.token);
+			done();
+		})
+		.catch(done);
 });
 
 test(`Login user, should return status 201 and token`, (done) => {
-	// Login user
-	// Redeclare token with token returned from here
-	done();
+	request(app)
+		.post(`/users/login`)
+		.send({
+			username: `testMan`,
+			password: `testPassword`,
+		})
+		.expect(200)
+		.then((data) => {
+			expect(data.body).toHaveProperty(`token`);
+			expect(data.body.token).toBe(data.body.token);
+			token = data.body.token;
+			done();
+		})
+		.catch(done);
 });
 
 describe(`Music`, () => {
 	test(`Add music, should return status 201 and data that is just added`, (done) => {
-		// Add music
-		done();
+		request(app)
+			.post(`/musics/add`)
+			.set(`token`, token)
+			.send({
+				title: `Jam Test`,
+				musicData: `data`,
+			})
+			.expect(201)
+			.then((data) => {
+				compareAllKey(data);
+				musicPostId = data.id;
+				done();
+			})
+			.catch(done);
 	});
 
 	test(`Get Music, should return status 200 and data sort descending by like`, (done) => {
-		// get music, include Like rating count and sorted descending by like
-		done();
+		request(app)
+			.get(`/musics`)
+			.expect(200)
+			.then((data) => {
+				let sorted = data.body.sort((a, b) => a.rating - b.rating);
+				expect(data.body).not.toHaveLength(0);
+				expect(data.body).toBe(sorted);
+				done();
+			})
+			.catch(done);
 	});
 
 	test(`Get Music with ID as params, should return status 200 and data`, (done) => {
@@ -37,52 +108,128 @@ describe(`Music`, () => {
 	});
 
 	test(`Delete Music, should return status 200 and data that is just deleted`, (done) => {
-		// Delete music
-		done();
+		request(app)
+			.delete(`/musics/${musicPostId}`)
+			.set(`token`, token)
+			.expect(200)
+			.then((data) => {
+				compareAllKey(data);
+				done();
+			})
+			.catch(done);
 	});
 });
 
 describe(`Music post interaction`, () => {
 	beforeAll((done) => {
-		//add a music post
-	});
-
-	afterAll((done) => {
-		// clean up
+		request(app)
+			.post(`/musics/add`)
+			.set(`token`, token)
+			.send({
+				title: `Jam Test`,
+				musicData: `data`,
+			})
+			.expect(201)
+			.then((data) => {
+				compareAllKey(data);
+				musicPostId = data.id;
+				done();
+			})
+			.catch(done);
+		done();
 	});
 
 	describe(`Rating`, () => {
-		test(`User likes a music post, should return 201`, (done) => {
-			// user like 1 post by music ID
-			done();
+		test(`User likes a music post, should return 204`, (done) => {
+			request(app)
+				.put(`/rates/like`)
+				.set(`token`, token)
+				.expect(204)
+				.then(() => {
+					done();
+				})
+				.catch(done);
 		});
 
-		test(`User dislike a music post, should return 201`, (done) => {
-			// user dislike 1 post by music ID
-			done();
+		test(`User dislike a music post, should return 204`, (done) => {
+			request(app)
+				.put(`/rates/dislike`)
+				.set(`token`, token)
+				.expect(204)
+				.then(() => {
+					done();
+				})
+				.catch(done);
+		});
+
+		test(`User remove rating from a music post, should return 204`, (done) => {
+			request(app)
+				.put(`/rates/remove`)
+				.set(`token`, token)
+				.expect(204)
+				.then(() => {
+					done();
+				})
+				.catch(done);
 		});
 	});
 
 	describe(`Comments`, () => {
 		var commentId;
 		test(`User comments on a post, should return 201 and data added`, (done) => {
-			// User add comment
-			done();
+			request(app)
+				.post(`/comments/add`)
+				.set(`token`, token)
+				.send({
+					comment: `The Music sounds like a test`,
+				})
+				.expect(201)
+				.then((data) => {
+					compareAllKey(data);
+					commentId = data.id;
+					done();
+				})
+				.catch(done);
 		});
 
 		test(`Get comments on a post, should return 200 and data`, (done) => {
-			// get comments by music ID
-			done();
+			request(app)
+				.get(`/comments/${musicPostId}`)
+				.set(`token`, token)
+				.expect(201)
+				.then((data) => {
+					expect(data.body).not.toHaveLength(0);
+					done();
+				})
+				.catch(done);
 		});
 
 		test(`User Edit comment on a post, should return 200, original data and edited data`, (done) => {
-			// user edit comment
-			done();
+			request(app)
+				.put(`/comments/${commentId}`)
+				.set(`token`, token)
+				.send({
+					comment: `Actually Test sounds like this music`,
+				})
+				.expect(200)
+				.then((data) => {
+					expect(data.body).toHaveProperty(`comment`);
+					expect(data.body.comment).toBe(data.body.comment);
+					done();
+				})
+				.catch(done);
 		});
 
 		test(`User delete comment on a post, should return 200 and data deleted`, (done) => {
-			// user delete comment
-			done();
+			request(app)
+				.delete(`/comments/${commentId}`)
+				.set(`token`, token)
+				.expect(200)
+				.then((data) => {
+					compareAllKey(data);
+					done();
+				})
+				.catch(done);
 		});
 	});
 });

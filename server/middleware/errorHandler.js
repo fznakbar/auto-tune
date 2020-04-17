@@ -7,6 +7,11 @@ module.exports = (err, req, res, next) => {
             status = 400
             message = [err.message]
             break;
+
+        case `ForbiddenError`:
+            status = 403
+            message = [err.message]
+            break;
     }
 
     status === 500 && console.log(err)
