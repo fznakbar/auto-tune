@@ -1,12 +1,12 @@
 const jwt = require(`../helpers/jwt`)
-const createError = require(`../helpers/createErrors`)
+const createError = require(`http-errors`)
 const Model = require(`../models`)
 
 module.exports = (req, res, next) => {
     var { token } = req.headers
 
     try {
-        req.user = jwt.jwtVerify(token)
+        req.user = jwt.verify(token)
 
         Model.User.findOne({
             where: {

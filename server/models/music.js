@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
 	const Music = sequelize.define(
-		'Music',
+		`Music`,
 		{
 			title: {
 				type: DataTypes.STRING,
@@ -19,13 +19,17 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
-      UsersId: DataTypes.INTEGER,
-      allowNull: false,
+			UserId: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
 		},
-		{}
+		{
+			sequelize,
+		}
 	);
 	Music.associate = function (models) {
-		models.User.hasMany(models.Music)
+		Music.belongsTo(models.User);
 	};
 	return Music;
 };
