@@ -95,9 +95,16 @@ Response(**200**)
 
 ## GET /musics/:id
 
-WIP (Work in Progress)
+Response(**200**)
 
-Pending further testing/development
+```
+{
+    id: INTEGER,
+    title: STRING,
+    musicData: STRING,
+    UserId: INTEGER,
+}
+```
 
 ## DELETE /musics/:id
 
