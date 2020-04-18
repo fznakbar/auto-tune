@@ -1,4 +1,5 @@
 const { Music, User } = require(`../models`);
+const createError = require(`http-errors`);
 
 class MusicController {
 	static sortedMusic(req, res, next) {
@@ -27,7 +28,29 @@ class MusicController {
 			.catch(next);
 	}
 
-	static delMusic(req, res, next) {}
+	static delMusic(req, res, next) {
+		let id = Number(req.params.id);
+
+		Music.findOne({
+			where: {
+				id,
+			},
+		})
+			.then((data) => {
+				if (data) {
+					Music.destroy({
+						where: {
+							id,
+						},
+					});
+
+					res.status(200).json(data);
+				} else {
+					throw createError(404, `Music of ID ${id} does not exist`);
+				}
+			})
+			.catch(next);
+	}
 }
 
 module.exports = MusicController;
