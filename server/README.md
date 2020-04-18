@@ -61,6 +61,7 @@ headers : {
 body: {
     title: STRING,
     musicData: STRING,
+    UserId: INTEGER,
 }
 ```
 
@@ -70,6 +71,7 @@ Response(**201**)
 {
     title: STRING,
     musicData: STRING,
+    UserId: INTEGER,
 }
 
 ```
@@ -86,6 +88,8 @@ Response(**200**)
         id: INTEGER,
         title: STRING,
         musicData: STRING,
+        UserId: INTEGER,
+        Username: STRING,
         rating: INTEGER,
     }
 ]
@@ -114,6 +118,7 @@ Response(**200**)
     id: INTEGER,
     title: STRING,
     musicData: STRING,
+    UserId: INTEGER,
 }
 ```
 
