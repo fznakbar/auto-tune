@@ -12,7 +12,23 @@ class MusicController {
 			.catch(next);
 	}
 
-	static musicById(req, res, next) {}
+	static musicById(req, res, next) {
+		let id = Number(req.params.id);
+
+		Music.findOne({
+			where: {
+				id,
+			},
+		})
+			.then((data) => {
+				if (data) {
+					res.status(200).json(data);
+				} else {
+					throw createError(404, `Music of ID ${id} not found`);
+				}
+			})
+			.catch(next);
+	}
 
 	static addMusic(req, res, next) {
 		let { title, musicData } = req.body;
@@ -46,7 +62,7 @@ class MusicController {
 
 					res.status(200).json(data);
 				} else {
-					throw createError(404, `Music of ID ${id} does not exist`);
+					throw createError(404, `Music of ID ${id} not found`);
 				}
 			})
 			.catch(next);
