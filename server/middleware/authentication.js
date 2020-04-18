@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
                 if (data) {
                     next()
                 } else {
-                    throw createError(404, `User not found`)
+                    throw createError(401, `Unauthorized User`)
                 }
             })
     } catch (err) {

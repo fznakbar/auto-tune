@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "export NODE_ENV=test && jest",
     "winTest": "set NODE_ENV=test&& jest",
-    "start": "node bin/index.js"
+    "dev": "export NODE_ENV=development && nodemon bin/httpServer.js",
+    "windev": "set NODE_ENV=development&&nodemon bin/httpServer.js",
+    "start": "node bin/httpServer.js"
   },
   "keywords": [],
   "author": "",
