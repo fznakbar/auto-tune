@@ -158,7 +158,7 @@ headers: {
 
 Response(**204**)
 
-## DELETE /rates/remove/:musicId
+## DELETE /rates/:musicId
 
 Request
 

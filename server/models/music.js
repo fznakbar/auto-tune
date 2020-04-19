@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	Music.associate = function (models) {
 		Music.belongsTo(models.User);
+		Music.belongsToMany(models.User, { through: `Ratings` });
 	};
 	return Music;
 };
