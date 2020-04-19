@@ -1,4 +1,4 @@
-const { Music, User, Rating } = require(`../models`);
+const { Music, User, Rating, Comment } = require(`../models`);
 const createError = require(`http-errors`);
 
 class MusicController {
@@ -50,6 +50,7 @@ class MusicController {
 					},
 				},
 				Rating,
+				Comment,
 			],
 			attributes: {
 				exclude: `UserId`,
