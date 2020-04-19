@@ -86,8 +86,10 @@ Response(**200**)
         id: INTEGER,
         title: STRING,
         musicData: STRING,
-        UserId: INTEGER,
-        Username: STRING,
+        User: {
+            id: INTEGER,
+            username: STRING,
+        },
         rating: INTEGER,
     }
 ]
@@ -102,7 +104,10 @@ Response(**200**)
     id: INTEGER,
     title: STRING,
     musicData: STRING,
-    UserId: INTEGER,
+    User: {
+        id: INTEGER,
+        username: STRING,
+    },
 }
 ```
 

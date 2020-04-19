@@ -4,7 +4,17 @@ const createError = require(`http-errors`);
 class MusicController {
 	static sortedMusic(req, res, next) {
 		Music.findAll({
-			include: [User],
+			include: [
+				{
+					model: User,
+					attributes: {
+						exclude: `password`,
+					},
+				},
+			],
+			attributes: {
+				exclude: `UserId`,
+			},
 		})
 			.then((data) => {
 				res.status(200).json(data);
@@ -18,6 +28,17 @@ class MusicController {
 		Music.findOne({
 			where: {
 				id,
+			},
+			include: [
+				{
+					model: User,
+					attributes: {
+						exclude: `password`,
+					},
+				},
+			],
+			attributes: {
+				exclude: `UserId`,
 			},
 		})
 			.then((data) => {
