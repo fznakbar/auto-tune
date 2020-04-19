@@ -49,6 +49,7 @@ class CommentController {
 
 	static editComment(req, res, next) {
 		let id = Number(req.params.commentId);
+		let { comment } = req.body;
 
 		toxicity.load(0.8).then((model) => {
 			model
@@ -81,7 +82,7 @@ class CommentController {
 					}
 				})
 				.then((data) => {
-					res.status(200).json(data);
+					res.status(200).json(data[0][0]);
 				})
 				.catch(next);
 		});
@@ -89,10 +90,11 @@ class CommentController {
 
 	static delCommment(req, res, next) {
 		let id = Number(req.params.commentId);
+		let returning;
 		Comment.findByPk(id)
 			.then((data) => {
 				if (data) {
-					var returning = data;
+					returning = data;
 					return Comment.destroy({
 						where: {
 							id,
