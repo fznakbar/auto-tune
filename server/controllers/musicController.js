@@ -1,4 +1,4 @@
-const { Music, User } = require(`../models`);
+const { Music, User, Rating } = require(`../models`);
 const createError = require(`http-errors`);
 
 class MusicController {
@@ -11,12 +11,25 @@ class MusicController {
 						exclude: `password`,
 					},
 				},
+				{
+					model: Rating,
+					where: {
+						like: true,
+					},
+					required: false,
+				},
 			],
 			attributes: {
 				exclude: `UserId`,
 			},
 		})
 			.then((data) => {
+				data.map((datum) => {
+					datum.dataValues.Ratings = datum.Ratings.length;
+					return datum;
+				});
+
+				data = data.sort((a, b) => b.dataValues.Ratings - a.dataValues.Ratings);
 				res.status(200).json(data);
 			})
 			.catch(next);
@@ -36,6 +49,7 @@ class MusicController {
 						exclude: `password`,
 					},
 				},
+				Rating,
 			],
 			attributes: {
 				exclude: `UserId`,
@@ -43,6 +57,19 @@ class MusicController {
 		})
 			.then((data) => {
 				if (data) {
+					let like = 0;
+					let dislike = 0;
+
+					data.dataValues.Ratings.forEach((i) => {
+						if (i.like) {
+							like++;
+						} else {
+							dislike++;
+						}
+					});
+
+					data.dataValues.Ratings = { like, dislike };
+
 					res.status(200).json(data);
 				} else {
 					throw createError(404, `Music of ID ${id} not found`);

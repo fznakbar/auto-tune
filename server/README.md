@@ -108,6 +108,10 @@ Response(**200**)
         id: INTEGER,
         username: STRING,
     },
+    Ratings: {
+        like: INTEGER,
+        dislike: INTEGER,
+    }
 }
 ```
 
