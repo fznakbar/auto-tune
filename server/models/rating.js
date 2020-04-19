@@ -34,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
 		{}
 	);
 	Rating.associate = function (models) {
-    // associations can be defined here
+		Rating.hasMany(models.Music);
+		Rating.hasMany(models.User);
 	};
 	return Rating;
 };
