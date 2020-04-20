@@ -33,11 +33,11 @@ function App() {
             <Home />
           </Route>
 
-          <Route path="/top-star">
+          <Route exact path="/top-star">
             <Topstar />
           </Route>
 
-          <Route path="/beat">
+          <Route exact path="/beat">
             <Beat />
           </Route>
 
