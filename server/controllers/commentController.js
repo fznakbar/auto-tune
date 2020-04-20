@@ -1,6 +1,7 @@
 const { Comment } = require(`../models`);
 const createError = require(`http-errors`);
 const toxicity = require('@tensorflow-models/toxicity');
+const toxicityThreshold = 0.7;
 
 class CommentController {
 	static commentById(req, res, next) {
@@ -24,7 +25,7 @@ class CommentController {
 		let UserId = req.user.id;
 		let MusicId = Number(req.params.musicId);
 		let { comment } = req.body;
-		toxicity.load(0.8).then((model) => {
+		toxicity.load(toxicityThreshold).then((model) => {
 			model
 				.classify([comment])
 				.then((predictions) => {
@@ -51,7 +52,7 @@ class CommentController {
 		let id = Number(req.params.commentId);
 		let { comment } = req.body;
 
-		toxicity.load(0.8).then((model) => {
+		toxicity.load(toxicityThreshold).then((model) => {
 			model
 				.classify([comment])
 				.then((predictions) => {
@@ -82,7 +83,7 @@ class CommentController {
 					}
 				})
 				.then((data) => {
-					res.status(200).json(data[0][0]);
+					res.status(200).json(data[1][0]);
 				})
 				.catch(next);
 		});
