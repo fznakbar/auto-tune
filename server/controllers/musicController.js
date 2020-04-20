@@ -11,25 +11,31 @@ class MusicController {
 						exclude: `password`,
 					},
 				},
-				{
-					model: Rating,
-					where: {
-						like: true,
-					},
-					required: false,
-				},
+				Rating,
 			],
 			attributes: {
 				exclude: `UserId`,
 			},
 		})
 			.then((data) => {
-				data.map((datum) => {
-					datum.dataValues.Ratings = datum.Ratings.length;
-					return datum;
+				let like = 0;
+				let dislike = 0;
+
+				data.forEach((i) => {
+					i.dataValues.Ratings.forEach((o) => {
+						if (o.like) {
+							like++;
+						} else {
+							dislike++;
+						}
+					});
+
+					i.dataValues.Ratings = { like, dislike };
 				});
 
-				data = data.sort((a, b) => b.dataValues.Ratings - a.dataValues.Ratings);
+				data = data.sort(
+					(a, b) => b.dataValues.Ratings.like - a.dataValues.Ratings.like
+				);
 				res.status(200).json(data);
 			})
 			.catch(next);
@@ -50,7 +56,20 @@ class MusicController {
 					},
 				},
 				Rating,
-				Comment,
+				{
+					model: Comment,
+					attributes: {
+						exclude: [`MusicId`, `UserId`],
+					},
+					include: [
+						{
+							model: User,
+							attributes: {
+								exclude: [`password`],
+							},
+						},
+					],
+				},
 			],
 			attributes: {
 				exclude: `UserId`,
@@ -58,14 +77,14 @@ class MusicController {
 		})
 			.then((data) => {
 				if (data) {
-					let like = 0;
-					let dislike = 0;
+					let like = [];
+					let dislike = [];
 
 					data.dataValues.Ratings.forEach((i) => {
 						if (i.like) {
-							like++;
+							like.push(i);
 						} else {
-							dislike++;
+							dislike.push(i);
 						}
 					});
 
