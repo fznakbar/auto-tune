@@ -11,11 +11,12 @@ import store from './store'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Home from './pages/Home'
+import Home from './pages/Topstar'
+import Topstar from './pages/Topstar'
 
 function App() {
   return (
-    <Provider store={ store }>
+    <Provider store={store}>
       <Router>
         <Switch>
 
@@ -29,6 +30,10 @@ function App() {
 
           <Route exact path="/">
             <Home />
+          </Route>
+
+          <Route path="/top-star">
+            <Topstar />
           </Route>
 
         </Switch>
