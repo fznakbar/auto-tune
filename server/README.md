@@ -176,7 +176,7 @@ Response(**204**)
 
 # Users Comments
 
-## POST /comments/add
+## POST /comments/:musicId
 
 Request
 
@@ -185,8 +185,7 @@ headers: {
     token: STRING
 }
 body: {
-    comment: STRING,
-    musicId: INTEGER
+    comment: STRING
 }
 ```
 
@@ -194,25 +193,24 @@ Response(**201**)
 
 ```
 {
-    comment: STRING,
-    musicId: INTEGER
+    id: INTEGER,
+    UserId: INTEGER,
+    MusicId: INTEGER,
+    comment: STRING
 }
 ```
 
-## GET /comments/:musicId
+## GET /comments/:commentId
 
 Response(**200**)
 
 ```
-[
-    {
-        id: INTEGER,
-        title: STRING,
-        musicData: STRING,
-        likes: INTEGER,
-        dislikes: INTEGER,
-    }
-]
+{
+    id: INTEGER,
+    UserId: INTEGER,
+    MusicId: INTEGER,
+    comment: STRING
+}
 ```
 
 ## PUT /comments/:commentId
@@ -233,6 +231,8 @@ Response(**200**)
 ```
 {
     id: INTEGER,
+    UserId: INTEGER,
+    MusicId: INTEGER,
     comment: STRING
 }
 ```
@@ -252,6 +252,8 @@ Response(**200**)
 ```
 {
     id: INTEGER,
+    UserId: INTEGER,
+    MusicId: INTEGER,
     comment: STRING
 }
 ```

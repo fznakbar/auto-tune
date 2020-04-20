@@ -1,14 +1,12 @@
 const router = require(`express`).Router();
-const users = require(`./userRoutes`);
-const musics = require(`./musicRoutes`);
-const rates = require(`./ratingRoutes`);
 
 router.get(`/`, (req, res, next) => {
 	res.status(200).json(`home`);
 });
 
-router.use(`/users`, users);
-router.use(`/musics`, musics);
-router.use(`/rates`, rates);
+router.use(`/users`, require(`./userRoutes`));
+router.use(`/musics`, require(`./musicRoutes`));
+router.use(`/rates`, require(`./ratingRoutes`));
+router.use(`/comments`, require(`./commentRoutes`))
 
 module.exports = router;

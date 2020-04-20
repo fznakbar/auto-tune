@@ -1,7 +1,7 @@
 const request = require(`supertest`);
 const app = require(`../index`);
 const model = require(`../models`);
-
+jest.setTimeout(10000);
 var token;
 var musicPostId;
 

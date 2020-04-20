@@ -1,4 +1,4 @@
-const { User } = require(`../models`);
+const { User, Comment } = require(`../models`);
 const createError = require(`http-errors`);
 const jwt = require(`../helpers/jwt`);
 const bcrypt = require(`../helpers/bcrypt`);

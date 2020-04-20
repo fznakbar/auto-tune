@@ -5,17 +5,17 @@ module.exports = (err, req, res, next) => {
 	switch (err.name) {
 		case `NotFoundError`:
 			status = 404;
-			message = err.message;
+			message = [err.message];
 			break;
 
 		case `BadRequestError`:
 			status = 400;
-			message = err.message;
+			message = [err.message];
 			break;
 
 		case `ForbiddenError`:
 			status = 403;
-			message = err.message;
+			message = [err.message];
 			break;
 
 		case `SequelizeUniqueConstraintError`:
