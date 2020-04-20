@@ -13,6 +13,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Topstar'
 import Topstar from './pages/Topstar'
+import Beat from './pages/Beat'
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
 
           <Route path="/top-star">
             <Topstar />
+          </Route>
+
+          <Route path="/beat">
+            <Beat />
           </Route>
 
         </Switch>
