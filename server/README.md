@@ -50,7 +50,7 @@ Response(**200**)
 
 # Music
 
-## POST /musics/add
+## POST /musics
 
 Request
 
@@ -61,7 +61,6 @@ headers : {
 body: {
     title: STRING,
     musicData: STRING,
-    UserId: INTEGER,
 }
 ```
 
@@ -71,7 +70,6 @@ Response(**201**)
 {
     title: STRING,
     musicData: STRING,
-    UserId: INTEGER,
 }
 
 ```
@@ -88,8 +86,10 @@ Response(**200**)
         id: INTEGER,
         title: STRING,
         musicData: STRING,
-        UserId: INTEGER,
-        Username: STRING,
+        User: {
+            id: INTEGER,
+            username: STRING,
+        },
         rating: INTEGER,
     }
 ]
@@ -97,9 +97,23 @@ Response(**200**)
 
 ## GET /musics/:id
 
-WIP (Work in Progress)
+Response(**200**)
 
-Pending further testing/development
+```
+{
+    id: INTEGER,
+    title: STRING,
+    musicData: STRING,
+    User: {
+        id: INTEGER,
+        username: STRING,
+    },
+    Ratings: {
+        like: INTEGER,
+        dislike: INTEGER,
+    }
+}
+```
 
 ## DELETE /musics/:id
 
@@ -148,7 +162,7 @@ headers: {
 
 Response(**204**)
 
-## DELETE /rates/remove/:musicId
+## DELETE /rates/:musicId
 
 Request
 

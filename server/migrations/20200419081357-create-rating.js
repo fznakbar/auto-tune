@@ -1,27 +1,34 @@
 'use strict';
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-		return queryInterface.createTable('Music', {
+		return queryInterface.createTable('Ratings', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			title: {
-				type: Sequelize.STRING,
-			},
-			musicData: {
-				type: Sequelize.STRING,
-			},
 			UserId: {
 				type: Sequelize.INTEGER,
+				allowNull: false,
 				references: {
 					model: `Users`,
-					key: `id`,
 				},
 				onUpdate: 'cascade',
 				onDelete: 'cascade',
+			},
+			MusicId: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: `Music`,
+				},
+				onUpdate: 'cascade',
+				onDelete: 'cascade',
+			},
+			like: {
+				type: Sequelize.BOOLEAN,
+				allowNull: false,
 			},
 			createdAt: {
 				allowNull: false,
@@ -34,6 +41,6 @@ module.exports = {
 		});
 	},
 	down: (queryInterface, Sequelize) => {
-		return queryInterface.dropTable('Music');
+		return queryInterface.dropTable('Ratings');
 	},
 };
