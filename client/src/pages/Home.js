@@ -1,11 +1,28 @@
 import React from 'react';
+import Navbar from '../components/navbar/navbar'
+import Topstar from '../components/topStar/topstar'
+import './home.css'
 
-function Home(){
-  return(
+function Home() {
+  return (
     <div>
-      <h1>Home</h1>
+      <Navbar />
+      <div className='container-home'>
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+        <Topstar />
+      </div>
     </div>
   )
 }
+
+
 
 export default Home
