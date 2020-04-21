@@ -16,6 +16,7 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "sweetalert2": "^9.10.12",
     "tone": "^13.8.25"
   },
   "scripts": {
