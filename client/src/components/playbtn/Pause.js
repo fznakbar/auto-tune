@@ -1,12 +1,12 @@
 import React from 'react'
 import './playbtn.css'
 
-const Play = () => {
+const Pause = () => {
   return (
     <div className='prevbtn'>
-      <i className="fas fa-play"></i>
+      <i className="fas fa-pause"></i>
     </div>
   )
 }
 
-export default Play
+export default Pause
