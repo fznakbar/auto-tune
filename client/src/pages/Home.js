@@ -4,6 +4,7 @@ import Tone from 'tone'
 import Swal from 'sweetalert2';
 import Navbar from '../components/navbar/navbar'
 import Loading from '../components/Loading';
+import axios from 'axios'
 
 // GLOBAL COMPONENT
 var synth = new Tone.Synth()
@@ -113,7 +114,6 @@ function Home() {
   let [bottomRight, setBottomRight] = useState(3);
   let [upRight, setUpRight] = useState(3);
   let [upLeft, setUpLeft] = useState(3);
-  console.log(upLeft)
   const kiriAtasPlus = () =>{
     if(upLeft < 5){
       setUpLeft(upLeft + 1);
@@ -207,7 +207,9 @@ function Home() {
     beat = `F${bottomRight}`
     synth.triggerAttackRelease(`F${bottomRight}`, "8n")
   }
-  const saveMusic = () => {
+  const saveMusic = (e) => {
+    e.preventDefault()
+    console.log('asagsgsagfrsasd')
     Swal.fire({
       title: 'Are you sure?',
       text: "You will save your music to your profile!",
@@ -219,7 +221,18 @@ function Home() {
     }).then((result) => {
       if (result.value) {
         // axios database musicData nya cuyy
-        console.log(musicData)
+        axios({
+          method : "POST",
+          url : 'http://localhost:3000/musics',
+          headers : {
+            token : localStorage.getItem('token')
+          },
+          data : {
+            title : title,
+            musicData : musicData
+          }
+        })
+        // console.log(musicData)
         Swal.fire(
           'Saved!',
           'Your file has been saved.',
@@ -229,6 +242,7 @@ function Home() {
     })
   }
   const [bpm, setBpm] = useState(Tone.Transport.bpm.value);
+  const [title, setTitle] = useState('')
  return(
    <>
     <Navbar interval={intervalId} localStream={ localStream } />
@@ -255,7 +269,15 @@ function Home() {
           }
         </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
-          { musicData && <button onClick={ saveMusic } className="btn btn-primary">Save</button> }
+          { musicData && 
+           <>
+            <form onSubmit={saveMusic}>
+              <label className="text-warning mt-3" style={{fontSize : "20px"}}>Beat Title :</label><br></br>
+              <input type="text" onChange={(e) => setTitle(e.target.value)} required></input><br></br>
+              <button type="submit" className="btn btn-primary mt-3">Save</button>
+            </form>
+            </>
+          }
         </div>
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <button onClick={ () => {Tone.Transport.start(); setBeatOn(true)} } className="btn btn-info mx-1">Start Beat</button>
