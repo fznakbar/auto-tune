@@ -16,7 +16,7 @@ class RatingController {
 				if (data) {
 					return Rating.update(
 						{
-							like: true,
+							like,
 						},
 						{
 							where: {
@@ -29,7 +29,7 @@ class RatingController {
 					return Rating.create({
 						UserId,
 						MusicId,
-						like: true,
+						like,
 					});
 				}
 			})
