@@ -32,6 +32,7 @@ module.exports = (err, req, res, next) => {
 			message = errMsg;
 			break;
 
+		case `UnauthorizedError`:
 		case `JsonWebTokenError`:
 			status = 401;
 			message = [`Invalid Token`];
