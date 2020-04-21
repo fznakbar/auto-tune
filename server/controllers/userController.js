@@ -7,7 +7,6 @@ class UserController {
 	static register(req, res, next) {
 
 		let { username, password } = req.body;
-
 		User.create({ username, password })
 			.then((data) => {
 				var token = jwt.sign({
