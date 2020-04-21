@@ -1,35 +1,42 @@
 const request = require(`supertest`);
 const app = require(`../index`);
 const model = require(`../models`);
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 var token;
-var musicPostId;
 
 function compareAllKey(data) {
-	for (var key in respond.body) {
+	for (var key in data.body) {
 		expect(key).toBe(key);
 	}
-	console.log(data.body);
 }
 
-afterAll((done) => {
-	model.User.destroy({ truncate: true, cascade: true, restartIdentity: true })
-		.then(() => {})
-		.catch(done);
-	model.Music.destroy({
+afterAll(async (done) => {
+	await model.User.destroy({
 		truncate: true,
 		cascade: true,
 		restartIdentity: true,
-	})
-		.then((data) => {
-			done();
-		})
-		.catch(done);
+	});
+	await model.Music.destroy({
+		truncate: true,
+		cascade: true,
+		restartIdentity: true,
+	});
+	await model.Comment.destroy({
+		truncate: true,
+		cascade: true,
+		restartIdentity: true,
+	});
+	await model.Rating.destroy({
+		truncate: true,
+		cascade: true,
+		restartIdentity: true,
+	});
+	done();
 });
 
-test.only(`home`, (done) => {
+test(`home`, (done) => {
 	request(app)
-		.get(`/er`)
+		.get(`/`)
 		.expect(200)
 		.then((data) => {
 			expect(data.body).toBe(`home`);
@@ -38,43 +45,58 @@ test.only(`home`, (done) => {
 		.catch(done);
 });
 
-test(`Register user, should return status 201 and token`, (done) => {
-	request(app)
-		.post(`/users/register`)
-		.send({
-			username: `testMan`,
-			password: `testPassword`,
-		})
-		.expect(201)
-		.then((data) => {
-			expect(data.body).toHaveProperty(`token`);
-			expect(data.body.token).toBe(data.body.token);
-			done();
-		})
-		.catch(done);
-});
+describe(`User`, () => {
+	test(`Register user, should return status 201 and token`, (done) => {
+		request(app)
+			.post(`/users/register`)
+			.send({
+				username: `testMan`,
+				password: `testPassword`,
+			})
+			.expect(201)
+			.then((data) => {
+				expect(data.body).toHaveProperty(`token`);
+				expect(data.body.token).toBe(data.body.token);
+				done();
+			})
+			.catch(done);
+	});
 
-test(`Login user, should return status 201 and token`, (done) => {
-	request(app)
-		.post(`/users/login`)
-		.send({
-			username: `testMan`,
-			password: `testPassword`,
-		})
-		.expect(200)
-		.then((data) => {
-			expect(data.body).toHaveProperty(`token`);
-			expect(data.body.token).toBe(data.body.token);
-			token = data.body.token;
-			done();
-		})
-		.catch(done);
+	test(`Login user, should return status 201 and token`, (done) => {
+		request(app)
+			.post(`/users/login`)
+			.send({
+				username: `testMan`,
+				password: `testPassword`,
+			})
+			.expect(200)
+			.then((data) => {
+				expect(data.body).toHaveProperty(`token`);
+				expect(data.body.token).toBe(data.body.token);
+				token = data.body.token;
+				console.log(token);
+				done();
+			})
+			.catch(done);
+	});
+
+	test(`get User data, should return status 201 and user data`, (done) => {
+		request(app)
+			.get(`/users/1`)
+			.expect(200)
+			.then((data) => {
+				compareAllKey(data);
+				console.log(data.body);
+				done();
+			})
+			.catch(done);
+	});
 });
 
 describe(`Music`, () => {
 	test(`Add music, should return status 201 and data that is just added`, (done) => {
 		request(app)
-			.post(`/musics/add`)
+			.post(`/musics`)
 			.set(`token`, token)
 			.send({
 				title: `Jam Test`,
@@ -83,7 +105,7 @@ describe(`Music`, () => {
 			.expect(201)
 			.then((data) => {
 				compareAllKey(data);
-				musicPostId = data.id;
+				console.log(data.body);
 				done();
 			})
 			.catch(done);
@@ -103,17 +125,25 @@ describe(`Music`, () => {
 	});
 
 	test(`Get Music with ID as params, should return status 200 and data`, (done) => {
-		// get music by ID, include like and dislike count
-		done();
+		request(app)
+			.get(`/musics/1`)
+			.expect(200)
+			.then((data) => {
+				compareAllKey(data);
+				console.log(data.body);
+				done();
+			})
+			.catch(done);
 	});
 
 	test(`Delete Music, should return status 200 and data that is just deleted`, (done) => {
 		request(app)
-			.delete(`/musics/${musicPostId}`)
+			.delete(`/musics/1`)
 			.set(`token`, token)
 			.expect(200)
 			.then((data) => {
 				compareAllKey(data);
+				console.log(data.body);
 				done();
 			})
 			.catch(done);
@@ -123,26 +153,23 @@ describe(`Music`, () => {
 describe(`Music post interaction`, () => {
 	beforeAll((done) => {
 		request(app)
-			.post(`/musics/add`)
+			.post(`/musics`)
 			.set(`token`, token)
 			.send({
-				title: `Jam Test`,
-				musicData: `data`,
+				title: `AAAAAAAAAAAA`,
+				musicData: `BBBBBBBBB`,
 			})
-			.expect(201)
 			.then((data) => {
-				compareAllKey(data);
-				musicPostId = data.id;
+				console.log(data.body);
 				done();
 			})
 			.catch(done);
-		done();
 	});
 
 	describe(`Rating`, () => {
-		test(`User likes a music post, should return 204`, (done) => {
+		test(`User likes a music post, should return 204`, async (done) => {
 			request(app)
-				.put(`/rates/like`)
+				.put(`/rates/like/2`)
 				.set(`token`, token)
 				.expect(204)
 				.then(() => {
@@ -153,7 +180,7 @@ describe(`Music post interaction`, () => {
 
 		test(`User dislike a music post, should return 204`, (done) => {
 			request(app)
-				.put(`/rates/dislike`)
+				.put(`/rates/dislike/2`)
 				.set(`token`, token)
 				.expect(204)
 				.then(() => {
@@ -164,7 +191,7 @@ describe(`Music post interaction`, () => {
 
 		test(`User remove rating from a music post, should return 204`, (done) => {
 			request(app)
-				.put(`/rates/remove`)
+				.delete(`/rates/2`)
 				.set(`token`, token)
 				.expect(204)
 				.then(() => {
@@ -178,7 +205,7 @@ describe(`Music post interaction`, () => {
 		var commentId;
 		test(`User comments on a post, should return 201 and data added`, (done) => {
 			request(app)
-				.post(`/comments/add`)
+				.post(`/comments/2`)
 				.set(`token`, token)
 				.send({
 					comment: `The Music sounds like a test`,
@@ -187,7 +214,8 @@ describe(`Music post interaction`, () => {
 				.expect(201)
 				.then((data) => {
 					compareAllKey(data);
-					commentId = data.id;
+					console.log(data.body);
+					commentId = data.body.id;
 					done();
 				})
 				.catch(done);
@@ -195,11 +223,12 @@ describe(`Music post interaction`, () => {
 
 		test(`Get comments on a post, should return 200 and data`, (done) => {
 			request(app)
-				.get(`/comments/${musicPostId}`)
+				.get(`/comments/${commentId}`)
 				.set(`token`, token)
 				.expect(200)
 				.then((data) => {
-					expect(data.body).not.toHaveLength(0);
+					compareAllKey(data);
+					console.log(data.body);
 					done();
 				})
 				.catch(done);
@@ -230,6 +259,7 @@ describe(`Music post interaction`, () => {
 				.expect(200)
 				.then((data) => {
 					compareAllKey(data);
+					console.log(data.body);
 					done();
 				})
 				.catch(done);
