@@ -1,36 +1,33 @@
 import React from 'react'
-
+import axios from 'axios';
 import Icontrash from '../listbeat/icon/Icon-trash'
 import './listbeat.css'
-const Listbeat = () => {
+const Listbeat = (props) => {
+  const deleteData = () => {
+    const { id } = props
+    axios({
+      method: 'DELETE',
+      url: `http://localhost:3000/musics/${id}`,
+      headers: {
+        id: localStorage.id
+      }
+    })
+  }
   return (
     <div className='bar'>
       <div className='container-bar-player'>
         <div className='content-player'>
           <div className='circle-play-btn'>
-            <div><i class="fas fa-music"></i></div>
+            <div><i className="fas fa-music"></i></div>
           </div>
           <span>
-            Song Tittle
+            {props.title}
           </span>
         </div>
-        {/* <div className='box-icon-thumbs'>
-          <div className='thumbs'>
-            <div className='icon'>
-              <i class="fas fa-thumbs-up"></i>
-            </div>
-            <span>10</span>
-          </div>
-          <div className='thumbs'>
-            <div className='icon'>
-              <i class="fas fa-thumbs-down"></i>
-            </div>
-            <span>5</span>
-          </div>
-        </div> */}
       </div>
-      {/* <IconComment /> */}
-      <Icontrash />
+      <div onClick={deleteData}>
+        <Icontrash />
+      </div>
     </div>
   )
 }
