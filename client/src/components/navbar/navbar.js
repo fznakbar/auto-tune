@@ -10,14 +10,8 @@ const Navbar = () => {
         <div className='menu-item' onClick={() => { history.push('/') }}>
           <span>Studio</span>
         </div>
-        <div className='menu-item' onClick={() => { history.push('/top-star') }}>
-          <span>Top Star</span>
-        </div>
         <div className='menu-item' onClick={() => { history.push('/beat') }}>
           <span>Beat</span>
-        </div>
-        <div className='menu-item' onClick={() => { history.push('/profile') }}>
-          <span>Profile</span>
         </div>
       </div>
       <div className='logout'>

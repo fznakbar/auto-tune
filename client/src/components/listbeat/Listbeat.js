@@ -1,5 +1,5 @@
 import React from 'react'
-import IconComment from '../listbeat/icon/Icon-comment'
+
 import Icontrash from '../listbeat/icon/Icon-trash'
 import './listbeat.css'
 const Listbeat = () => {
@@ -8,13 +8,13 @@ const Listbeat = () => {
       <div className='container-bar-player'>
         <div className='content-player'>
           <div className='circle-play-btn'>
-            <div><i class="fas fa-play"></i></div>
+            <div><i class="fas fa-music"></i></div>
           </div>
           <span>
             Song Tittle
-      </span>
+          </span>
         </div>
-        <div className='box-icon-thumbs'>
+        {/* <div className='box-icon-thumbs'>
           <div className='thumbs'>
             <div className='icon'>
               <i class="fas fa-thumbs-up"></i>
@@ -27,9 +27,9 @@ const Listbeat = () => {
             </div>
             <span>5</span>
           </div>
-        </div>
+        </div> */}
       </div>
-      <IconComment />
+      {/* <IconComment /> */}
       <Icontrash />
     </div>
   )

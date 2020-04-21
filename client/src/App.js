@@ -12,8 +12,8 @@ import store from './store'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Topstar'
-import Topstar from './pages/Topstar'
 import Beat from './pages/Beat'
+import Comment from './pages/Comment'
 
 function App() {
   return (
@@ -33,12 +33,12 @@ function App() {
             <Home />
           </Route>
 
-          <Route exact path="/top-star">
-            <Topstar />
-          </Route>
-
           <Route exact path="/beat">
             <Beat />
+          </Route>
+
+          <Route exact path="/beat/:id">
+            <Comment />
           </Route>
 
         </Switch>
