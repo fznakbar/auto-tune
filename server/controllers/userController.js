@@ -15,6 +15,7 @@ class UserController {
 
 				res.status(201).json({
 					token,
+					id: data.id
 				});
 			})
 			.catch(next);
@@ -38,6 +39,7 @@ class UserController {
 
 						res.status(200).json({
 							token,
+							id: data.id
 						});
 					} else {
 						throw createError(400, `Wrong Username/Password`);
