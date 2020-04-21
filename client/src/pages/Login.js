@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 
 function Login(){
   let history = useHistory()
-  let [email, setEmail] = useState('')
+  let [username, setUsername] = useState('')
   let [password, setPassword] = useState('')
 
   const registerPage = () =>{
@@ -12,7 +13,21 @@ function Login(){
 
   const login = (e) => {
     e.preventDefault()
-    console.log(email, password)
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/users/login',
+        data: {
+          username,
+          password
+        }
+      })
+      .then(({ data }) => {
+        console.log(data)
+        localStorage.setItem('id', data.id)
+        localStorage.setItem('token', data.token)
+        history.push("/")
+      })
+   
     history.push("/")
   }
 
@@ -25,7 +40,7 @@ function Login(){
           <h1 style={{textAlign : "center"}} className="mt-5">Login</h1>
             <form onSubmit={login}>
               <label>Username :</label>
-              <input onChange={e => setEmail(e.target.value)} style={{color : "black"}} type="text" className="form-control" required></input>
+              <input onChange={e => setUsername(e.target.value)} style={{color : "black"}} type="text" className="form-control" required></input>
               <label>Password :</label>
               <input onChange={e => setPassword(e.target.value)} style={{color : "black"}} type="password" className="form-control" required></input>
               <button type="submit" className="btn btn-warning mb-1 mt-4">Login</button><br></br>

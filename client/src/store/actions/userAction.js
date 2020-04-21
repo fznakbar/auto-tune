@@ -30,3 +30,14 @@ export const musics = (id) => async (dispatch) => {
     })
     .catch(err => err)
 }
+
+export const updateMusic = (id) => async (dispatch, useState) => {
+  const musicList = useState(state => state.userReducer.musics);
+  const newMusicList = musicList.userReducer.musics.filter(x => {
+    return x.id !== id;
+  });
+  dispatch({
+    type: 'UPDATE_MUSIC',
+    payload: newMusicList
+  })
+}

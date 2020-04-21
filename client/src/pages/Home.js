@@ -18,6 +18,7 @@ Tone.Transport.scheduleRepeat(time => {
 }, '4n');
 var intervalId = null
 var localStream = null;
+
 function Home() {
   const [loading, setLoading] = useState(true);
   synth.toMaster();
@@ -209,7 +210,6 @@ function Home() {
   }
   const saveMusic = (e) => {
     e.preventDefault()
-    console.log('asagsgsagfrsasd')
     Swal.fire({
       title: 'Are you sure?',
       text: "You will save your music to your profile!",
@@ -220,6 +220,7 @@ function Home() {
       confirmButtonText: 'Yes, save it!'
     }).then((result) => {
       if (result.value) {
+        setTitle('');
         // axios database musicData nya cuyy
         axios({
           method : "POST",
@@ -273,7 +274,7 @@ function Home() {
            <>
             <form onSubmit={saveMusic}>
               <label className="text-warning mt-3" style={{fontSize : "20px"}}>Beat Title :</label><br></br>
-              <input type="text" onChange={(e) => setTitle(e.target.value)} required></input><br></br>
+              <input type="text" onChange={(e) => setTitle(e.target.value)} required value={ title }></input><br></br>
               <button type="submit" className="btn btn-primary mt-3">Save</button>
             </form>
             </>
