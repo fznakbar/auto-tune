@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+// import axios from 'axios';
 
 function Register(){
   let history = useHistory()
@@ -13,8 +14,19 @@ function Register(){
 
   const register = (e) => {
     e.preventDefault()
+    console.log(email)
     if(password === confirmPassword){
-      console.log(email, password)
+      // axios({
+      //   method: 'POST',
+      //   url: 'http://localhost:3000/users/register',
+      //   data: {
+      //     email,
+      //     password
+      //   }
+      // })
+      //   .then(({ data }) => {
+      //     console.log(data.token)
+      //   })
       history.push("/")
     } else {
       console.log('wrong password')

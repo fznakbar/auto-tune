@@ -11,7 +11,8 @@ import store from './store'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Home from './pages/Topstar'
+import Home from './pages/Home'
+import Topstar from './pages/Topstar'
 import Beat from './pages/Beat'
 import Comment from './pages/Comment'
 
