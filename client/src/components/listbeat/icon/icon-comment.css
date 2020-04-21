@@ -1,0 +1,11 @@
+.icon-comment{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  background-color: #34495E;
+  margin-left: 13px;  
+  cursor: pointer;
+}
