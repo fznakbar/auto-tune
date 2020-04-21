@@ -1,0 +1,58 @@
+.container-beat{
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-top: 70px;
+  background-color: #243441;
+  height: calc(100vh - 50px);
+  display: flex;
+}
+.container-list{
+  overflow-x: auto;
+  padding-left: 30px;
+  width: 60%;
+  height: 70vh;
+}
+.container-thumbPlay{  
+  width: 40%;
+  height: 70vh;
+}
+.container-thumbPlay{
+  background-image: url('../assets//backgroundPlayer-thumb.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.5; */
+  display: flex;
+  flex-direction: column;
+  padding: 50px 70px;
+}
+.container-arrow{
+  /* border:1px solid white; */
+  display:flex;
+  justify-content: space-between;  
+}
+.container-Coverplay{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.cove-play{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.songtitle{
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+}
+.control-play{
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-top: 30px;
+}

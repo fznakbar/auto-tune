@@ -1,0 +1,29 @@
+.container-card{
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* background-color: grey; */
+  padding-top: 2em;
+}
+.profile{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: white;
+  margin-bottom: 10px;
+}
+h5,h6{
+  font-weight: bold;
+  color: white;
+  /* padding-top: 0.5em; */
+  /* letter-spacing: 2px; */
+}
+.icon-love{
+  display: flex;
+  flex-direction: column;
+}
+span{
+  color:white
+}
