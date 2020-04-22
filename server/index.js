@@ -6,10 +6,12 @@ if (process.env.NODE_ENV === `development` || process.env.NODE_ENV === `test`) {
 const express = require(`express`);
 const app = express();
 const cors = require(`cors`);
+const bodyParser  = require('body-parser');
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '100mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}))
+
 
 app.use(`/`, require(`./routes`));
 
