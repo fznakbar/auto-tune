@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 			musicData: {
-				type: DataTypes.STRING,
+				type: DataTypes.TEXT,
 				validation: {
 					notEmpty: {
 						msg: `musicData can't be empty!`,

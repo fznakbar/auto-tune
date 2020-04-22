@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios';
 
 function Register(){
   let history = useHistory()
-  let [email, setEmail] = useState('')
+  let [username, setUsername] = useState('')
   let [password, setPassword] = useState('')
   let [confirmPassword, setConfirmPassword] = useState('')
 
@@ -14,8 +15,19 @@ function Register(){
   const register = (e) => {
     e.preventDefault()
     if(password === confirmPassword){
-      console.log(email, password)
-      history.push("/")
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/users/register',
+        data: {
+          username,
+          password
+        }
+      })
+      .then(({ data }) => {
+        localStorage.setItem('id', data.id)
+        localStorage.setItem('token', data.token)
+        history.push("/")
+      })
     } else {
       console.log('wrong password')
     }
@@ -29,7 +41,7 @@ function Register(){
           <h1 style={{textAlign : "center"}} className="mt-5">Register</h1>
             <form onSubmit={register}>
               <label>Username :</label>
-              <input onChange={e => setEmail(e.target.value)} style={{color : "black"}} type="text" className="form-control" required></input>
+              <input onChange={e => setUsername(e.target.value)} style={{color : "black"}} type="text" className="form-control" required></input>
               <label>Password :</label>
               <input onChange={e => setPassword(e.target.value)} style={{color : "black"}} type="password" className="form-control" required></input>
               <label>Confirm Password :</label>

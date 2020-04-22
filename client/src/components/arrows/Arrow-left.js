@@ -4,7 +4,7 @@ import './arrow.css'
 const Arrowleft = () => {
   return (
     <div className='icon-arrows'>
-      <i class="fas fa-arrow-left"></i>
+      <i className="fas fa-arrow-left"></i>
     </div>
   )
 }

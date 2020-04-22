@@ -4,12 +4,17 @@
 
 .login{
   background: url('./assets/backgroundLogin.jpg');
-  background-size: 100em 50em;
+  background-size: cover;
   background-repeat: no-repeat;
 }
 
 .register{
   background: url('./assets/backgroundLogin.jpg');
-  background-size: 100em 50em;
+  background-size: cover;
   background-repeat: no-repeat;
+}
+
+.home{
+  background-color: #4a697d;
+  height: 95vh;
 }

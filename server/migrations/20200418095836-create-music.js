@@ -12,7 +12,7 @@ module.exports = {
 				type: Sequelize.STRING,
 			},
 			musicData: {
-				type: Sequelize.STRING,
+				type: Sequelize.TEXT,
 			},
 			UserId: {
 				type: Sequelize.INTEGER,

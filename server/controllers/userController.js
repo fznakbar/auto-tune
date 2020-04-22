@@ -5,8 +5,8 @@ const bcrypt = require(`../helpers/bcrypt`);
 
 class UserController {
 	static register(req, res, next) {
-		let { username, password } = req.body;
 
+		let { username, password } = req.body;
 		User.create({ username, password })
 			.then((data) => {
 				var token = jwt.sign({
@@ -15,6 +15,7 @@ class UserController {
 
 				res.status(201).json({
 					token,
+					id: data.id
 				});
 			})
 			.catch(next);
@@ -22,6 +23,7 @@ class UserController {
 
 	static login(req, res, next) {
 		let { username, password } = req.body;
+
 
 		User.findOne({
 			where: {
@@ -37,6 +39,7 @@ class UserController {
 
 						res.status(200).json({
 							token,
+							id: data.id
 						});
 					} else {
 						throw createError(400, `Wrong Username/Password`);

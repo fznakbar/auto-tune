@@ -11,8 +11,7 @@ import store from './store'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Home from './pages/Topstar'
-import Topstar from './pages/Topstar'
+import Home from './pages/Home'
 import Beat from './pages/Beat'
 
 function App() {
@@ -31,10 +30,6 @@ function App() {
 
           <Route exact path="/">
             <Home />
-          </Route>
-
-          <Route exact path="/top-star">
-            <Topstar />
           </Route>
 
           <Route exact path="/beat">
