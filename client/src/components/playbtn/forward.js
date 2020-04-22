@@ -4,7 +4,7 @@ import './playbtn.css'
 const Forward = () => {
   return (
     <div className='prevbtn'>
-      <i className="fas fa-forward"></i>
+      <i className="fas fa-step-forward"></i>
     </div>
   )
 }

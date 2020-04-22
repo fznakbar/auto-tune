@@ -11,6 +11,11 @@ const Navbar = (props) => {
     clearInterval(props.interval);
     history.push('/beat');
   }
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    history.push('/login');
+  }
   return (
     <div className='navbar-container'>
       <div className='menu-container'>
@@ -21,9 +26,15 @@ const Navbar = (props) => {
           <span>Beat</span>
         </div>
       </div>
-      <div className='logout'>
+      { localStorage.getItem('token') ? 
+      <div className='logout' onClick={ logout }>
         <span>Logout</span>
       </div>
+      :
+      <div className='logout' onClick={ () => history.push('/login') }>
+        <span>Login</span>
+      </div>
+      }
     </div>
   )
 }
