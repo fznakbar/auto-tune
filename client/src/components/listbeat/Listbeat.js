@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 const Listbeat = (props) => {
   const dispatch = useDispatch();
+  const { setLoading } = props;
   const deleteData = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -19,6 +20,7 @@ const Listbeat = (props) => {
     }).then((result) => {
       if (result.value) {
         const { id } = props
+        setLoading(true);
         axios({
           method: 'DELETE',
           url: `https://gentle-crag-62773.herokuapp.com/musics/${id}`,
@@ -27,13 +29,14 @@ const Listbeat = (props) => {
           }
         })
           .then(() => {
+            setLoading(false);
             dispatch(updateMusic(id));
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
           })
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
       }
     })
   }

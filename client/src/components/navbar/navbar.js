@@ -1,13 +1,18 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import '../navbar/navbar.css'
+import Tone from 'tone'
 
 const Navbar = (props) => {
   const history = useHistory()
+  const { recorder } = props;
   const beat = () => {
     if(props.localStream) {
       props.localStream.getTracks()[0].stop();
     }
+    const recorderValidation = recorder.state;
+    if (recorderValidation === 'recording') recorder.stop();
+    Tone.Transport.stop()
     clearInterval(props.interval);
     history.push('/beat');
   }

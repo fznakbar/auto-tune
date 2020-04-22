@@ -8,14 +8,12 @@ import Play from '../components/playbtn/Play'
 import Pause from '../components/playbtn/Pause'
 import Loading from '../components/Loading';
 import { Howl } from 'howler'
-import { useDispatch, useSelector } from 'react-redux'
-import { musics } from '../store/actions/userAction'
+import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 const Beat = () => {
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const dispatch = useDispatch()
-  const id = localStorage.id
   const stateMusic = useSelector(state => state.userReducer.musics)
   useEffect(() => {
     if (stateMusic[0]) {
@@ -28,8 +26,6 @@ const Beat = () => {
   useEffect(() => {
     if (!localStorage.id) {
       history.push('/login');
-    } else {
-      dispatch(musics(id))
     }
     // eslint-disable-next-line 
   }, [])
@@ -56,7 +52,7 @@ const Beat = () => {
     const data = stateMusic.map((dataValues, index) => {
       return (
         <div key={dataValues.id} onClick={() => changeMusic(dataValues.musicData, dataValues.title, index)}>
-          <Listbeat key={dataValues.id} id={dataValues.id} title={dataValues.title} />
+          <Listbeat setLoading={ setLoading } key={dataValues.id} id={dataValues.id} title={dataValues.title} />
         </div>
       )
     });
@@ -79,12 +75,31 @@ const Beat = () => {
       setMusicCounter(musicCounter + 1);
     }
   }
+  const showData = () => {
+    if (stateMusic.length > 0) {
+      if (loading) {
+        return (
+          <div style={{ textAlign: 'center', marginTop: '100px' }}>
+            <Loading />
+          </div>
+        )
+      } else {
+        return showMusic();
+      }
+    } else {
+      return (
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h1 style={{ color: 'white' }}>There is nothing here, yet!</h1>
+        </div>
+      )
+    }
+  }
   return (
     <div>
       <Navbar />
       <div className='container-beat'>
         <div className='container-list'>
-          {stateMusic.length > 0 ? showMusic() : <div style={{ textAlign: 'center', marginTop: '50px' }}><Loading /></div>}
+          {showData()}
         </div>
         <div className='container-thumbPlay'>
           <div className='container-Coverplay'>

@@ -1,22 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Switch,
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
-import { Provider } from 'react-redux'
 import './App.css'
 
-import store from './store'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import Beat from './pages/Beat'
+import { useDispatch } from 'react-redux'
+import { musics } from './store/actions/userAction'
 
 function App() {
+  const dispatch = useDispatch();
+  const id = localStorage.id;
+  useEffect(() => {
+    if (localStorage.id) {
+      dispatch(musics(id));
+    }
+    // eslint-disable-next-line
+  }, [id])
   return (
-    <Provider store={store}>
       <Router>
         <Switch>
 
@@ -38,7 +45,6 @@ function App() {
 
         </Switch>
       </Router>
-    </Provider>
   );
 }
 
