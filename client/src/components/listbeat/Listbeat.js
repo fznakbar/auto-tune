@@ -21,7 +21,7 @@ const Listbeat = (props) => {
         const { id } = props
         axios({
           method: 'DELETE',
-          url: `http://localhost:3000/musics/${id}`,
+          url: `https://gentle-crag-62773.herokuapp.com/musics/${id}`,
           headers: {
             token : localStorage.getItem('token')
           }
