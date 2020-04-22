@@ -11,31 +11,12 @@ class MusicController {
 						exclude: `password`,
 					},
 				},
-				Rating,
 			],
 			attributes: {
 				exclude: `UserId`,
 			},
 		})
 			.then((data) => {
-				let like = 0;
-				let dislike = 0;
-
-				data.forEach((i) => {
-					i.dataValues.Ratings.forEach((o) => {
-						if (o.like) {
-							like++;
-						} else {
-							dislike++;
-						}
-					});
-
-					i.dataValues.Ratings = { like, dislike };
-				});
-
-				data = data.sort(
-					(a, b) => b.dataValues.Ratings.like - a.dataValues.Ratings.like
-				);
 				res.status(200).json(data);
 			})
 			.catch(next);
@@ -55,21 +36,6 @@ class MusicController {
 						exclude: `password`,
 					},
 				},
-				Rating,
-				{
-					model: Comment,
-					attributes: {
-						exclude: [`MusicId`, `UserId`],
-					},
-					include: [
-						{
-							model: User,
-							attributes: {
-								exclude: [`password`],
-							},
-						},
-					],
-				},
 			],
 			attributes: {
 				exclude: `UserId`,
@@ -77,19 +43,6 @@ class MusicController {
 		})
 			.then((data) => {
 				if (data) {
-					let like = [];
-					let dislike = [];
-
-					data.dataValues.Ratings.forEach((i) => {
-						if (i.like) {
-							like.push(i);
-						} else {
-							dislike.push(i);
-						}
-					});
-
-					data.dataValues.Ratings = { like, dislike };
-
 					res.status(200).json(data);
 				} else {
 					throw createError(404, `Music of ID ${id} not found`);

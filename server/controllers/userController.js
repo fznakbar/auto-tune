@@ -62,50 +62,6 @@ class UserController {
 						exclude: `UserId`,
 					},
 				},
-				{
-					model: Comment,
-					attributes: {
-						exclude: [`UserId`, `MusicId`],
-					},
-					include: [
-						{
-							model: Music,
-							attributes: {
-								exclude: `UserId`
-							},
-							include: [
-								{
-									model: User,
-									attributes: {
-										exclude: `password`
-									}
-								}
-							]
-						}
-					],
-				},
-				{
-					model: Rating,
-					attributes: {
-						exclude: [`UserId`, `MusicId`]
-					},
-					include: [
-						{
-							model: Music,
-							attributes: {
-								exclude: `UserId`
-							},
-							include: [
-								{
-									model: User,
-									attributes: {
-										exclude: `password`
-									}
-								}
-							]
-						}
-					]
-				}
 			],
 		})
 			.then((data) => {
