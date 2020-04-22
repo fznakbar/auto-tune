@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function Register(){
   let history = useHistory()
@@ -27,9 +28,19 @@ function Register(){
         localStorage.setItem('id', data.id)
         localStorage.setItem('token', data.token)
         history.push("/")
+      }).catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Username has already been taken!',
+        })
       })
     } else {
-      console.log('wrong password')
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please input the same password!',
+      })
     }
   }
 
@@ -47,7 +58,8 @@ function Register(){
               <label>Confirm Password :</label>
               <input onChange={e => setConfirmPassword(e.target.value)} style={{color : "black"}} type="password" className="form-control" required></input>
               <button type="submit" className="btn btn-warning mb-1 mt-4">Register</button><br></br>
-              <button onClick={loginPage} className="btn btn-clear" style={{color : "#0048d9"}}>Already have an account ? Login</button>
+              <button onClick={loginPage} className="btn btn-clear" style={{color : "#0048d9"}}>Already have an account ? Login</button><br />
+              <button onClick={ () => history.push('/') } className="btn btn-clear" style={{color : "#0048d9"}}>Try First!</button>
             </form>
         </div>
     </div>

@@ -41,3 +41,10 @@ export const updateMusic = (id) => async (dispatch, useState) => {
     payload: newMusicList
   })
 }
+
+export const addMusic = (data) => async dispatch => {
+  dispatch({
+    type: 'ADD_MUSIC',
+    payload: data
+  })
+}

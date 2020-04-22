@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import Navbar from '../components/navbar/navbar'
 import Loading from '../components/Loading';
 import axios from 'axios'
+import { addMusic } from '../store/actions/userAction';
+import { useDispatch } from 'react-redux';
 
 // GLOBAL COMPONENT
 var synth = new Tone.Synth()
@@ -20,6 +22,7 @@ var intervalId = null
 var localStream = null;
 
 function Home() {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   synth.toMaster();
   let chunks = [];
@@ -28,15 +31,14 @@ function Home() {
   };
   recorder.onstop = evt => {
     Tone.Transport.stop();
+    setBeatOn(false);
     setRecording(false);
-    // synth.disconnect();
     const blob = new Blob(chunks, { type: 'audio/ogg; codec=opus' });
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.onloadend = () => {
       const base64data = reader.result;
       setMusicData(base64data);
-      // synth.toMaster();
     }
   }
   const [recording, setRecording] = useState(false);
@@ -79,13 +81,11 @@ function Home() {
     }          
   }
   var video = document.querySelector('video');
-  // var video = useRef();
   
   useEffect(()=>{
     return () => {
       clearInterval(intervalId)
       video.pause();
-      // console.log(video.current.srcObject)
     }
     // eslint-disable-next-line 
   },[])
@@ -221,7 +221,6 @@ function Home() {
     }).then((result) => {
       if (result.value) {
         setTitle('');
-        // axios database musicData nya cuyy
         axios({
           method : "POST",
           url : 'https://gentle-crag-62773.herokuapp.com/musics',
@@ -233,12 +232,20 @@ function Home() {
             musicData : musicData
           }
         })
-        // console.log(musicData)
-        Swal.fire(
-          'Saved!',
-          'Your file has been saved.',
-          'success'
-        )
+          .then(({ data }) => {
+            dispatch(addMusic(data));
+            Swal.fire(
+              'Saved!',
+              'Your file has been saved.',
+              'success'
+            )
+          }).catch(err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'You have to login first!',
+            })
+          })
       }
     })
   }
@@ -246,15 +253,14 @@ function Home() {
   const [title, setTitle] = useState('')
  return(
    <>
-    <Navbar interval={intervalId} localStream={ localStream } />
+   { !loading && <Navbar interval={intervalId} localStream={ localStream } recorder={ recorder } /> }
   <div className="home row">
-    <div className="col-sm-8 mb-0 pb-0">
+    <div className="col-sm-8 mb-0 pb-0" style={{ height: '100%' }}>
       <div>
         <tone-demo autoplay style={{ width: '95%', height: '110px', marginTop: '40px', marginLeft: '40px' }} ></tone-demo>
       </div>
       <div>
         <video id="video" width="500" height="400"  style={{display: 'none',  width: '98%', height: '550px', marginTop: '180px', marginLeft: '25px', transform: 'rotateY(180deg)' }}></video>
-        {/* <video ref={video} id="video" width="500" height="400"  style={{display: 'none',  width: '98%', height: '550px', marginTop: '180px', marginLeft: '25px', transform: 'rotateY(180deg)' }}></video> */}
         <canvas id="canvas" style={{ width: '98%', height: '550px', marginTop: '180px', marginLeft: '25px' }}/>
       </div>
     </div>

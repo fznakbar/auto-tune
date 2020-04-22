@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
+import { musics } from '../store/actions/userAction';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 function Login(){
+  const dispatch = useDispatch();
   let history = useHistory()
   let [username, setUsername] = useState('')
   let [password, setPassword] = useState('')
@@ -22,13 +26,17 @@ function Login(){
         }
       })
       .then(({ data }) => {
-        console.log(data)
         localStorage.setItem('id', data.id)
         localStorage.setItem('token', data.token)
+        dispatch(musics(data.id));
         history.push("/")
-      })
-   
-    history.push("/")
+      }).catch(err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `${err.response.data[0]}`,
+        })
+      })   
   }
 
   return(
@@ -44,7 +52,8 @@ function Login(){
               <label>Password :</label>
               <input onChange={e => setPassword(e.target.value)} style={{color : "black"}} type="password" className="form-control" required></input>
               <button type="submit" className="btn btn-warning mb-1 mt-4">Login</button><br></br>
-              <button onClick={registerPage} className="btn btn-clear" style={{color : "#0048d9"}}>Don't have an account ? Register</button>
+              <button onClick={registerPage} className="btn btn-clear" style={{color : "#0048d9"}}>Don't have an account ? Register</button><br />
+              <button onClick={ () => history.push('/') } className="btn btn-clear" style={{color : "#0048d9"}}>Try First!</button>
             </form>
         </div>
       </div>
