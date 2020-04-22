@@ -14,6 +14,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use(`/`, require(`./routes`));
 
 app.use(require(`./middleware/errorHandler`));
-// app.listen(3000, () => console.log('running'))
 
 module.exports = app;

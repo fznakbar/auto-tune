@@ -1,7 +1,6 @@
 const request = require(`supertest`);
 const app = require(`../index`);
 const model = require(`../models`);
-jest.setTimeout(30000);
 var token;
 
 function compareAllKey(data) {
@@ -17,16 +16,6 @@ afterAll(async (done) => {
 		restartIdentity: true,
 	});
 	await model.Music.destroy({
-		truncate: true,
-		cascade: true,
-		restartIdentity: true,
-	});
-	await model.Comment.destroy({
-		truncate: true,
-		cascade: true,
-		restartIdentity: true,
-	});
-	await model.Rating.destroy({
 		truncate: true,
 		cascade: true,
 		restartIdentity: true,
@@ -111,14 +100,15 @@ describe(`Music`, () => {
 			.catch(done);
 	});
 
-	test(`Get Music, should return status 200 and data sort descending by like`, (done) => {
+	test(`Get Music, should return status 200 and data`, (done) => {
 		request(app)
 			.get(`/musics`)
 			.expect(200)
 			.then((data) => {
-				let sorted = data.body.sort((a, b) => a.rating - b.rating);
-				expect(data.body).not.toHaveLength(0);
-				expect(data.body).toBe(sorted);
+				data.body.forEach((i) => {
+					compareAllKey(i);
+				});
+				console.log(data.body);
 				done();
 			})
 			.catch(done);
