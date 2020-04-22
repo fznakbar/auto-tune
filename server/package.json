@@ -8,7 +8,7 @@
     "winTest": "set NODE_ENV=test&& jest",
     "dev": "export NODE_ENV=development && nodemon bin/httpServer.js",
     "windev": "set NODE_ENV=development&&nodemon bin/httpServer.js",
-    "start": "nodemon bin/httpServer.js"
+    "start":"node bin/httpServer.js"
   },
   "keywords": [],
   "author": "",

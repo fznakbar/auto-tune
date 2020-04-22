@@ -224,7 +224,7 @@ function Home() {
         // axios database musicData nya cuyy
         axios({
           method : "POST",
-          url : 'http://localhost:3000/musics',
+          url : 'https://gentle-crag-62773.herokuapp.com/musics',
           headers : {
             token : localStorage.getItem('token')
           },

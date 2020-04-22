@@ -15,7 +15,7 @@ export const login = data => {
 export const musics = (id) => async (dispatch) => {
   axios({
     method: 'GET',
-    url: `http://localhost:3000/users/${id}`,
+    url: `https://gentle-crag-62773.herokuapp.com/users/${id}`,
     headers: {
       token: localStorage.token
     }

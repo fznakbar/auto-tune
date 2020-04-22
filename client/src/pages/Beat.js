@@ -6,6 +6,7 @@ import Prev from '../components/playbtn/Prev'
 import Forward from '../components/playbtn/forward'
 import Play from '../components/playbtn/Play'
 import Pause from '../components/playbtn/Pause'
+import Loading from '../components/Loading';
 import { Howl } from 'howler'
 import { useDispatch, useSelector } from 'react-redux'
 import { musics } from '../store/actions/userAction'
@@ -83,7 +84,7 @@ const Beat = () => {
       <Navbar />
       <div className='container-beat'>
         <div className='container-list'>
-          {stateMusic.length > 0 && showMusic()}
+          {stateMusic.length > 0 ? showMusic() : <div style={{ textAlign: 'center', marginTop: '50px' }}><Loading /></div>}
         </div>
         <div className='container-thumbPlay'>
           <div className='container-Coverplay'>

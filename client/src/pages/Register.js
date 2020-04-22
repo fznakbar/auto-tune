@@ -17,7 +17,7 @@ function Register(){
     if(password === confirmPassword){
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/users/register',
+        url: 'https://gentle-crag-62773.herokuapp.com/users/register',
         data: {
           username,
           password
