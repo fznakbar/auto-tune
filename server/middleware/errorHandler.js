@@ -13,11 +13,6 @@ module.exports = (err, req, res, next) => {
 			message = [err.message];
 			break;
 
-		case `ForbiddenError`:
-			status = 403;
-			message = [err.message];
-			break;
-
 		case `SequelizeUniqueConstraintError`:
 			status = 400;
 			message = [`Username is already used`];

@@ -17,7 +17,7 @@ module.exports = (req, res, next) => {
                 if (data) {
                     next()
                 } else {
-                    next(createError(401, `Unauthorized User`))
+                    next(createError(401))
                 }
             })
     } catch (err) {
