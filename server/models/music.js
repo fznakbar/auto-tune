@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			title: {
 				type: DataTypes.STRING,
-				validation: {
+				allowNull: false,
+				validate: {
 					notEmpty: {
 						msg: `Title can't be empty!`,
 					},
@@ -13,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			musicData: {
 				type: DataTypes.TEXT,
-				validation: {
+				allowNull: false,
+				validate: {
 					notEmpty: {
 						msg: `musicData can't be empty!`,
 					},
@@ -30,8 +32,6 @@ module.exports = (sequelize, DataTypes) => {
 	);
 	Music.associate = function (models) {
 		Music.belongsTo(models.User);
-		Music.hasMany(models.Rating);
-		Music.hasMany(models.Comment);
 	};
 	return Music;
 };
