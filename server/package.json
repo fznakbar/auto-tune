@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "export NODE_ENV=test && jest --detectOpenHandles --forceExit",
+    "test": "export NODE_ENV=test && jest --detectOpenHandles --forceExit --coverage --watchAll=false",
     "winTest": "set NODE_ENV=test&& jest",
     "dev": "export NODE_ENV=development && nodemon bin/httpServer.js",
     "windev": "set NODE_ENV=development&&nodemon bin/httpServer.js",
